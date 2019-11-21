@@ -1,5 +1,5 @@
 open OUnit2 ;;
-open Exercises.Section1 ;;
+(* open Exercises.Section1 ;; *)
 
 let all_tests =
   "all tests" >::: []
