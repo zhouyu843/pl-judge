@@ -47,7 +47,7 @@ let is_older (_ : date) (_ : date) : bool =
     難易度　：　＊
 
     日付のリストとある月（int）を引数としてとり、
-    リスト中の、その月に含まれるの日付の数を返す。
+    リスト中の、その月に含まれる日付の数を返す。
 
     例　　　：
     # number_in_month [(2019,11,21),(2020,1,1)] 1 ;;
@@ -91,7 +91,7 @@ let number_in_months (_ : date list) (_ : int list) : int =
 
     例　　　：
     # dates_in_month [(2019,11,21),(2020,1,1)] 1 ;;
-    - : date list = [(2019, 11, 21)]
+    - : date list = [(2020, 1, 1)]
     
  *)
 
@@ -174,7 +174,7 @@ let date_to_string (_ : date) : string =
 
     例　　　：
     # number_before_reaching_num [1;2;3;4] 6 ;;
-    - : int list = [1; 2; 3]
+    - : int list = [1; 2]
     
  *)
 
@@ -244,10 +244,7 @@ let oldest (_ : date list) : date option =
     問題１２
     難易度　：  ＊＊＊
 
-    問題３と問題５の条件にある、入力の月が重複がない制限を外し、
-    もう一回実装せよ。
-    ただし、挙動が変わらないことを保証しなければならない。
-    
+    問題３と問題５の関数を、入力の月に重複があったとしても正しく動作するよう再実装せよ。
  *)
 
 let number_in_months' (_ : date list) (_ : int list) : int =
