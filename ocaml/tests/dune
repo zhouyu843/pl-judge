@@ -1,4 +1,4 @@
 (tests
-  (libraries exercises ounit2)
+  (libraries alcotest exercises)
   (names section1_test)
 )
