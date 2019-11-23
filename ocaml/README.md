@@ -16,7 +16,7 @@
   ```
 
 ## テストを実行する
-`<your-path-to>`/pl-judge/ocamlで
+`<your-path-to>/pl-judge/ocaml`で
 ```
 dune runtest
 ```
