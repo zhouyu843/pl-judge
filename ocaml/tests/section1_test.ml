@@ -521,7 +521,6 @@ let suite14 =
 ;;
 
 let () =
-  let open Alcotest in
   run "Section1_Test"
     [ suite01
     ; suite02
