@@ -22,7 +22,7 @@ let alternate (_ : int list) : int =
     問題２
     難易度　：　＊
 
-    int listを受け取り、最小値と最大値のペアを求めなさい。
+    空でないint listを受け取り、最小値と最大値のペアを求めなさい。
 
     例　　　：
     # min_max [1;2;3] ;
