@@ -112,6 +112,29 @@ let suite01 =
 ```
 `d010101`のような変数は`tests/test_data.ml`に定義されている。
 
+### 特定なテストだけ実行する
+`.../tests/dune`で`dune runtest`の時実行するテストスイートが指定されている。
+```
+(tests
+  (libraries alcotest exercises)
+  (names
+    section1_test
+    section2_test
+	...
+    ))
+```
+複数のテストスイートを同時に実行すると結果の出力が長くなり読みにくくなるので、
+テストしたくないスイート名の前に`;;`を付けるとそのテストスイートがコメントアウトされる。
+```
+(tests
+  (libraries alcotest exercises)
+  (names
+    ;; section1_test セクション１のテストは実行しない
+    section2_test
+	...
+    ))
+```
+
 ### 注意
 - `exercises/section*.ml`以外のファイルは変更しないでください
 - テンプレート関数の型は変更しないでください（テストと整合とれず、コンパイルエラーになるため）
