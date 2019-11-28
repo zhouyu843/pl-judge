@@ -1,4 +1,6 @@
 (tests
   (libraries alcotest exercises)
-  (names section1_test)
-)
+  (names
+    section1_test
+    section2_test
+    ))
