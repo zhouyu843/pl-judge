@@ -37,7 +37,7 @@ let min_max (_ : int list) : int * int =
 (**
 
     問題３
-    難易度　：　＊
+    難易度　：　＊＊
 
     xs : int listを受け取り、ys : int listを求めなさい。
     ただし、ysのi番目の要素はxsのi番目までの要素の和である。
@@ -75,9 +75,9 @@ let greeting (_ : string option) : string =
 (**
 
     問題５
-    難易度　：　＊
+    難易度　：　＊＊
 
-    xs, ys : int listを受け取り、
+    長さ同じの2つのint list（xsとysとおく）を受け取り、
     例のようにxiをyi回繰り返したリストを出力せよ。
 
     例　　　：
@@ -111,10 +111,10 @@ let add_opt (_ : int option) (_ : int option) : int option =
 (**
 
     問題７
-    難易度　：　＊
+    難易度　：　＊＊
 
     int option listを受け取り、Some iの要素の和を求めなさい。
-    ただし、全部の要素NoneのときはNoneを出力しなさい。
+    ただし、入力が空の時や、全部の要素NoneのときはNoneを出力しなさい。
 
     例　　　：
     # add_all_opt [Some 1; None ; Some 3] ;;
@@ -181,7 +181,7 @@ let zip (_ : int list) (_ : int list) : (int * int) list =
 (**
 
     問題１１
-    難易度　：　＊
+    難易度　：　＊＊＊
 
     zipの循環バージョン。
     片方が空になった時もう片方が空になるまで最初から循環する。
@@ -199,7 +199,7 @@ let zip_recycle (_ : int list) (_ : int list) : (int * int) list =
 (**
 
     問題１２
-    難易度　：　＊
+    難易度　：　＊＊
 
     2つのリストの長さが同じでない時Noneを返すようなzipを定義せよ。
 
@@ -271,7 +271,7 @@ let split_at (_ : int list) (_ : int) : int list * int list =
 (**
 
     問題１６
-    難易度　：　＊
+    難易度　：　＊＊
 
     入力されたint listが昇順にソートされているか判定せよ。
 
@@ -287,7 +287,7 @@ let is_sorted (_ : int list) : bool =
 
 (**
     問題１７
-    難易度　：　＊
+    難易度　：　＊＊
 
     入力されたint listが昇順または降順にソートされているか判定せよ。
     
@@ -304,7 +304,7 @@ let is_any_sorted (_ : int list) : bool =
 (**
 
     問題１８
-    難易度　：　＊
+    難易度　：　＊＊
 
     昇順にソート済みのint listを2つ受け取り、昇順となるリストを合成せよ。
 
@@ -321,7 +321,7 @@ let sorted_merge (_ : int list) (_ : int list) : int list =
 (**
 
     問題１９
-    難易度　：　＊
+    難易度　：　＊＊
 
     クイックソートを実装しなさい。
     int listの先頭の要素をsplit_atの閾値として使い、
@@ -357,7 +357,7 @@ let divide (_ : int list) : int list * int list =
 (**
 
     問題２１
-    難易度　：　＊
+    難易度　：　＊＊
 
     int listを受け取り、以下の方法で昇順に並べ替えなさい。
     リストをdivideで分割しsorted_mergeで合成するのを再帰的に行うことでソートせよ。
@@ -375,9 +375,9 @@ let not_so_quick_sort (_ : int list) : int list =
 (**
 
     問題２２
-    難易度　：　＊
+    難易度　：　＊＊
 
-    正整数kとnを受け取り、(d, n2)を返せよ。
+    2以上の整数kと正整数nを受け取り、(d, n2)を返せよ。
     ただし、dはnをkで連続で割れる回数、n2が最後の商。
 
     例　　　：
@@ -395,7 +395,7 @@ let full_divide (_ : int) (_ : int) : int * int =
 (**
 
     問題２３
-    難易度　：　＊
+    難易度　：　＊＊＊
 
     full_divideを用い、正整数nを素因数分解せよ。
     ただし、出力は(d, k)のリストの形となり、
@@ -419,7 +419,7 @@ let factorize (_ : int) : (int * int) list =
 (**
 
     問題２４
-    難易度　：　＊
+    難易度　：　＊＊
 
     問題２３で説明されたような素因数分解された(int * int) listを受け取り、
     元のnを求めよ（factorizeの逆関数を実装せよ）。
@@ -437,7 +437,7 @@ let multiply (_ : (int * int) list) : int =
 (**
 
     問題２５
-    難易度　：　＊
+    難易度　：　＊＊＊＊
 
     問題２３で説明されたような素因数分解された(int * int) listを受け取り、
     与えられた素因数と回数に基づき、元のnの因数を全て求めなさい。
