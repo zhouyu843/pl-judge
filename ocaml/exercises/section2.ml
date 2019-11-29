@@ -5,7 +5,7 @@ open Lib.Todo ;;
     問題１
     難易度　：　＊
 
-    int listを受け取り、交代に（正から）符号を振り和を求めなさい。
+    int listを受け取り、交互に（正から）符号を振り和を求めなさい。
 
     例　　　：
     # alternate [1;2;3;4] (* = 1 - 2 + 3 - 4 *) ;;
@@ -131,7 +131,7 @@ let add_all_opt (_ : int option list) : int option =
     問題８
     難易度　：　＊
 
-    bool listを受け取り、trueがあればtrue、なければfalseを返す。
+    bool listを受け取り、一つでもtrueがあればtrue、なければfalseを返す。
 
     例　　　：
     # any [true;false;true] ;;
@@ -165,7 +165,7 @@ let all (_ : bool list) : bool =
     問題１０
     難易度　：　＊
 
-    xs, ys : int listを受け取り、[(x0,y0);...;(xn,yn)]のようなリストを作ろう。
+    xs, ys : int listを受け取り、[(x0,y0);...;(xn,yn)]のようなリストを作りなさい。
     ただし、長さは短い方に揃える。
 
     例　　　：
@@ -342,7 +342,7 @@ let qsort (_ : int list) : int list =
     問題２０
     難易度　：　＊
 
-    int listを受け取り、要素を2つのint listに交代で振りなさい。s
+    int listを受け取り、要素を2つのint listに交互に振りなさい。
 
     例　　　：
     # divide [1;2;3;4;5;6;7] ;;
@@ -377,8 +377,8 @@ let not_so_quick_sort (_ : int list) : int list =
     問題２２
     難易度　：　＊＊
 
-    2以上の整数kと正整数nを受け取り、(d, n2)を返せよ。
-    ただし、dはnをkで連続で割れる回数、n2が最後の商。
+    2以上の整数kと正整数nを受け取り、k^d * n2 = nを満たす非負整数のペア(d, n2)を求めよ。
+    ただし、n2はkで割り切れてはいけない。
 
     例　　　：
     # full_divide 3 10 ;;
@@ -440,7 +440,7 @@ let multiply (_ : (int * int) list) : int =
     難易度　：　＊＊＊＊
 
     問題２３で説明されたような素因数分解された(int * int) listを受け取り、
-    与えられた素因数と回数に基づき、元のnの因数を全て求めなさい。
+    与えられた素因数と回数に基づき、元のnの約数を全て求めなさい。
     ただし、出力されたリストは昇順に並べ替えること。
 
     例　　　：
