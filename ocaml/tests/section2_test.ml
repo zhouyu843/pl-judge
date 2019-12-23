@@ -595,7 +595,7 @@ let suite25 =
             (all_products [(2,2);(3,1)]))
     ; quick_test "225D" (fun _ ->
           compare'
-            [1;2;3;6;14;21;42]
+            [1;2;3;6;7;14;21;42]
             (all_products [(2,1);(3,1);(7,1)]))
     ; quick_test "225E" (fun _ ->
           compare'
