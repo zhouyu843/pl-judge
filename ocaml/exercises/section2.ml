@@ -13,8 +13,12 @@ open Lib.Todo ;;
 
  *)
 
-let alternate (_ : int list) : int =
-  todo "alternate"
+let alternate (ns : int list) : int =
+  let rec aux ns acc n =
+    match ns with 
+      | [] -> acc
+      | x::xs -> aux xs (if n mod 2 = 0 then acc + x else acc - x) (n + 1)
+  in aux ns 0 0
 ;;
 
 (**
@@ -30,8 +34,15 @@ let alternate (_ : int list) : int =
 
  *)
 
-let min_max (_ : int list) : int * int =
-  todo "min_max"
+let min_max (ns : int list) : int * int =
+  let rec aux ns (min,max) =
+    match ns with 
+      | [] -> (min,max)
+      | x::xs -> aux xs ((if x < min then x else min), (if x > max then x else max))
+  in
+  match ns with
+    | [] -> (0,0)
+    | x::xs -> aux xs (x,x)
 ;;
 
 (**
@@ -48,8 +59,12 @@ let min_max (_ : int list) : int * int =
 
  *)
 
-let cumsum (_ : int list) : int list =
-  todo "cumsum"
+let cumsum (xs : int list) : int list =
+  let rec aux xs acc sum= 
+    match xs with
+      | [] -> acc
+      | x::xs -> aux xs ((x+sum)::acc) (x+sum)
+  in List.rev (aux xs [] 0)
 ;;
 
 (**
@@ -68,8 +83,11 @@ let cumsum (_ : int list) : int list =
 
  *)
 
-let greeting (_ : string option) : string =
-  todo "greeting"
+let greeting (x : string option) : string =
+  let aux x = "Hello there, " ^ x in
+  match x with
+    | None -> aux "you"
+    | Some x -> aux x
 ;;
 
 (**
@@ -86,8 +104,14 @@ let greeting (_ : string option) : string =
 
  *)
 
-let repeat (_ : int list) (_ : int list) : int list =
-  todo "repeat"
+let repeat (xs : int list) (ys : int list) : int list =
+  let rec aux xs ys acc =
+    match xs,ys with
+      | [],_ -> acc
+      | _,[] -> acc
+      | _::xs,0::ys -> aux xs ys acc
+      | x::xs,y::ys -> aux (x::xs) ((y-1)::ys) (x::acc)
+  in List.rev (aux xs ys [])
 ;;
 
 (**
@@ -104,8 +128,11 @@ let repeat (_ : int list) (_ : int list) : int list =
 
  *)
 
-let add_opt (_ : int option) (_ : int option) : int option =
-  todo "add_opt"
+let add_opt (x : int option) (y : int option) : int option =
+  match x,y with
+    | None,_ -> None
+    | _,None -> None
+    | Some x, Some y -> Some (x+y)
 ;;
 
 (**
@@ -122,8 +149,14 @@ let add_opt (_ : int option) (_ : int option) : int option =
 
  *)
 
-let add_all_opt (_ : int option list) : int option =
-  todo "add_all_opt"
+let add_all_opt (xs : int option list) : int option =
+  let rec aux xs acc = 
+    match xs,acc with
+      | [],acc -> acc
+      | None::xs,acc -> aux xs acc
+      | x::xs,None -> aux xs x
+      | (Some x)::xs,(Some acc) -> aux xs (Some(acc+x))
+  in aux xs None
 ;;
 
 (**
@@ -139,8 +172,11 @@ let add_all_opt (_ : int option list) : int option =
 
  *)
 
-let any (_ : bool list) : bool =
-  todo "any"
+let rec any (xs : bool list) : bool =
+  match xs with
+    | [] -> false
+    | true::_ -> true
+    | false::xs -> any xs
 ;;
 
 (**
@@ -156,8 +192,11 @@ let any (_ : bool list) : bool =
 
  *)
 
-let all (_ : bool list) : bool =
-  todo "all"
+let rec all (xs : bool list) : bool =
+  match xs with
+    | [] -> true
+    | false::_ -> false
+    | true::xs -> all xs
 ;;
 
 (**
@@ -174,8 +213,13 @@ let all (_ : bool list) : bool =
 
  *)
 
-let zip (_ : int list) (_ : int list) : (int * int) list =
-  todo "zip"
+let zip (xs : int list) (ys : int list) : (int * int) list =
+  let rec aux xs ys acc =
+    match xs,ys with
+      | [],_ -> acc
+      | _,[] -> acc
+      | x::xs,y::ys -> aux xs ys ((x,y)::acc)
+  in List.rev (aux xs ys [])
 ;;
 
 (**
@@ -192,8 +236,22 @@ let zip (_ : int list) (_ : int list) : (int * int) list =
 
  *)
 
-let zip_recycle (_ : int list) (_ : int list) : (int * int) list =
-  todo "zip_recycle"
+let zip_recycle (xs : int list) (ys : int list) : (int * int) list =
+  let rec aux a xs n acc = 
+    if a = [] then [] else
+    match xs,n with
+      | _,0 -> acc
+      | [],n -> aux a a n acc
+      | x::xs,n -> aux a xs (n-1) (x::acc)
+  in
+  let x_len = List.length xs in
+  let y_len = List.length ys in
+  let xs,ys =
+  if x_len = y_len then xs,ys
+  else if x_len < y_len then (List.rev (aux xs xs y_len []),ys)
+  else (xs,(List.rev (aux ys ys x_len []))) in
+  zip xs ys
+    
 ;;
 
 (**
@@ -212,8 +270,11 @@ let zip_recycle (_ : int list) (_ : int list) : (int * int) list =
 
  *)
 
-let zip_opt (_ : int list) (_ : int list) : (int * int) list option =
-  todo "zip_opt"
+let zip_opt (xs : int list) (ys : int list) : (int * int) list option =
+  let x_len = List.length xs in
+  let y_len = List.length ys in
+  if x_len = y_len then Some(zip xs ys)
+  else None
 ;;
 
 (**
@@ -230,8 +291,10 @@ let zip_opt (_ : int list) (_ : int list) : (int * int) list option =
 
  *)
 
-let lookup (_ : (string * int) list) (_ : string) : int option =
-  todo "lookup"
+let rec lookup (xs : (string * int) list) (y : string) : int option =
+  match xs with
+    | [] -> None
+    | x::xs -> let (s,i) = x in if s = y then Some i else lookup xs y
 ;;
 
 (**
@@ -247,8 +310,12 @@ let lookup (_ : (string * int) list) (_ : string) : int option =
 
  *)
 
-let splitup (_ : int list) : int list * int list =
-  todo "splitup"
+let splitup (xs : int list) : int list * int list =
+  let rec aux xs (p,m) =
+    match xs with
+      | [] -> (p,m)
+      | x::xs -> if x < 0 then aux xs (p,x::m) else aux xs (x::p,m)
+  in aux (List.rev xs) ([],[])
 ;;
 
 (**
@@ -264,8 +331,12 @@ let splitup (_ : int list) : int list * int list =
 
  *)
 
-let split_at (_ : int list) (_ : int) : int list * int list =
-  todo "split_at"
+let split_at (xs : int list) (y : int) : int list * int list =
+  let rec aux xs y (p,m) =
+    match xs with
+      | [] -> (p,m)
+      | x::xs -> if x < y then aux xs y (p,x::m) else aux xs y (x::p,m)
+  in aux (List.rev xs) y ([],[])
 ;;
 
 (**
@@ -281,8 +352,13 @@ let split_at (_ : int list) (_ : int) : int list * int list =
 
  *)
 
-let is_sorted (_ : int list) : bool =
-  todo "is_sorted"
+let is_sorted (xs : int list) : bool =
+  if xs = [] then true else
+  let rec aux xs acc =
+    match xs with
+      | [] -> true
+      | x::xs -> if x < acc then false else aux xs x
+  in aux xs (List.hd xs)
 ;;
 
 (**
@@ -297,8 +373,8 @@ let is_sorted (_ : int list) : bool =
 
  *)
 
-let is_any_sorted (_ : int list) : bool =
-  todo "is_any_sorted"
+let is_any_sorted (xs : int list) : bool =
+  is_sorted xs || is_sorted (List.rev xs)
 ;;
 
 (**
@@ -314,8 +390,14 @@ let is_any_sorted (_ : int list) : bool =
 
  *)
 
-let sorted_merge (_ : int list) (_ : int list) : int list =
-  todo "sorted_merge"
+let sorted_merge (xs : int list) (ys : int list) : int list =
+  let rec aux xs ys acc =
+    match xs,ys with
+      | [],[] -> acc
+      | [],y::ys -> aux xs ys (y::acc)
+      | x::xs,[] -> aux xs ys (x::acc)
+      | x::xs,y::ys -> if x < y then aux xs (y::ys) (x::acc) else aux (x::xs) ys (y::acc)
+  in List.rev (aux xs ys [])
 ;;
 
 (**
@@ -333,8 +415,11 @@ let sorted_merge (_ : int list) (_ : int list) : int list =
 
  *)
 
-let qsort (_ : int list) : int list =
-  todo "qsort"
+let rec qsort (xs : int list) : int list =
+  if is_sorted xs then xs else
+  match xs with
+    | [] -> []
+    | x::xs -> let (xs,ys) = split_at xs x in (qsort ys) @ [x] @ (qsort xs)
 ;;
 
 (**
@@ -350,8 +435,15 @@ let qsort (_ : int list) : int list =
 
  *)
 
-let divide (_ : int list) : int list * int list =
-  todo "divide"
+let divide (xs : int list) : int list * int list =
+  let rec aux xs acc =
+    let left,right = acc in
+    match xs with
+    | [] -> (List.rev left),(List.rev right)
+    | x::xs -> if List.length left > List.length right
+      then aux xs (left,x::right)
+      else aux xs (x::left,right)
+  in aux xs ([],[])
 ;;
 
 (**
@@ -368,8 +460,14 @@ let divide (_ : int list) : int list * int list =
 
  *)
 
-let not_so_quick_sort (_ : int list) : int list =
-  todo "not_so_quick_sort"
+let rec not_so_quick_sort (xs : int list) : int list =
+  if is_sorted xs then xs else
+  let (left,right) = divide xs in
+  match (is_sorted left),(is_sorted right) with
+  | true,true -> sorted_merge left right
+  | true,false -> sorted_merge left (not_so_quick_sort right)
+  | false,true -> sorted_merge (not_so_quick_sort left) right
+  | false,false -> sorted_merge (not_so_quick_sort left) (not_so_quick_sort right)
 ;;
 
 (**
@@ -388,8 +486,22 @@ let not_so_quick_sort (_ : int list) : int list =
 
  *)
 
-let full_divide (_ : int) (_ : int) : int * int =
-  todo "full_divide"
+let rec power x y =
+  let rec aux y acc =
+    match y with
+    | 0 -> acc
+    | y -> aux (y-1) (x*acc)
+  in aux y 1
+;;
+
+let full_divide (k : int) (n : int) : int * int =
+  let rec aux d =
+    if n mod (power k d) = 0 then
+      let n2 = n / (power k d) in if n2 mod k <> 0 then d
+      else aux (d+1)
+    else aux (d+1)
+  in let d = aux 0 in
+  (d,(n/(power k d)))
 ;;
 
 (**
@@ -412,8 +524,13 @@ let full_divide (_ : int) (_ : int) : int * int =
 
  *)
 
-let factorize (_ : int) : (int * int) list =
-  todo "factorize"
+let factorize (n : int) : (int * int) list =
+  let rec aux k n acc =
+    if n < 2 then acc else
+    let (d, n2) = full_divide k n in
+    if d = 0 then aux (k+1) n acc else
+    aux (k+1) n2 ((k,d)::acc)
+  in List.rev (aux 2 n [])
 ;;
 
 (**
@@ -430,8 +547,12 @@ let factorize (_ : int) : (int * int) list =
 
  *)
 
-let multiply (_ : (int * int) list) : int =
-  todo "multiply"
+let multiply (xs : (int * int) list) : int =
+  let rec aux xs acc = 
+    match xs with
+    | [] -> acc
+    | (k,n)::xs -> aux xs (power k n)*acc
+  in aux xs 1
 ;;
 
 (**
@@ -449,7 +570,30 @@ let multiply (_ : (int * int) list) : int =
 
  *)
 
-let all_products (_ : (int * int) list) : int list =
-  todo "all_products"
+let prod x =
+  let rec aux (k,n) acc =
+    match n with
+    | 0 -> 1::acc
+    | n -> aux (k,n-1) ((power k n)::acc)
+  in aux x []
+;;
+let mult_lists xs ys =
+  let rec mult_int_list x ys = 
+    match ys with
+    | [] -> []
+    | y::ys -> (x*y)::(mult_int_list x ys)
+  in
+  let rec aux xs acc =
+    match xs with 
+    | [] -> acc
+    | x::xs -> aux xs (acc @ (mult_int_list x ys))
+  in aux xs []
+;;
+let rec all_products (xs : (int * int) list) : int list =
+  let rec aux xs acc =
+    match xs with 
+    | [] -> acc
+    | x::xs -> aux xs (mult_lists (prod x) acc)
+  in qsort (aux xs [1])
 ;;
 

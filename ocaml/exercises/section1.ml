@@ -37,8 +37,8 @@ type date = int * int * int
      
  *)
 
-let is_older (_ : date) (_ : date) : bool =
-  todo "is_older"
+let is_older (a : date) (b : date) : bool =
+  a < b
 ;;
 
 (** 
@@ -55,8 +55,12 @@ let is_older (_ : date) (_ : date) : bool =
     
  *)
 
-let number_in_month (_ : date list) (_ : int) : int =
-  todo "number_in_month"
+let number_in_month (ds : date list) (x : int) : int =
+  let rec nim (ds : date list) (x : int) (r : int) : int = 
+    match ds with
+      | [] -> r
+      | (_,m,_)::tl -> if m = x then nim tl x (r+1) else nim tl x r
+  in nim ds x 0
 ;;
 
 (** 
@@ -76,8 +80,12 @@ let number_in_month (_ : date list) (_ : int) : int =
 
  *)
 
-let number_in_months (_ : date list) (_ : int list) : int =
-  todo "number_in_months"
+let number_in_months (ds : date list) (xs : int list) : int =
+  let rec mins ds xs (r : int) : int =
+    match xs with
+      | [] -> r
+      | x::xs -> mins ds xs (r + number_in_month ds x)
+  in mins ds xs 0
 ;;
 
 (** 
@@ -95,8 +103,12 @@ let number_in_months (_ : date list) (_ : int list) : int =
     
  *)
 
-let dates_in_month (_ : date list) (_ : int) : date list =
-  todo "dates_in_month"
+let dates_in_month (ds : date list) (x : int) : date list =
+  let rec dim (ds : date list) x (rs : date list) : date list =
+    match ds with
+      | [] -> rs
+      | d::ds -> let (_,m,_) = d in if m = x then dim ds x (rs @ [d]) else dim ds x rs
+  in dim ds x []
 ;;
 
 (** 
@@ -117,8 +129,12 @@ let dates_in_month (_ : date list) (_ : int) : date list =
     
  *)
 
-let dates_in_months (_ : date list) (_ : int list) : date list =
-  todo "dates_in_months"
+let dates_in_months (ds : date list) (xs : int list) : date list =
+  let rec dims ds xs (rs : date list) : date list =
+    match xs with
+      | [] -> rs
+      | x::xs -> dims ds xs (List.append rs (dates_in_month ds x))
+  in dims ds xs []
 ;;
 
 (** 
@@ -136,8 +152,10 @@ let dates_in_months (_ : date list) (_ : int list) : date list =
 
  *)
 
-let get_nth (_ : string list) (_ : int) : string =
-  todo "get_nth"
+let rec get_nth (xs : string list) (n : int) : string =
+  match xs with
+    | [] -> ""
+    | x::xs -> if n = 1 then x else get_nth xs (n-1)
 ;;
 
 (** 
@@ -157,8 +175,9 @@ let get_nth (_ : string list) (_ : int) : string =
     
  *)
 
-let date_to_string (_ : date) : string =
-  todo "date_to_string"
+let date_to_string ((y,m,d) : date) : string =
+  let month = ["Jan"; "Feb"; "Mar"; "Apr"; "May"; "Jun"; "Jul"; "Aug"; "Sep"; "Oct"; "Nov"; "Dec"] in
+  (get_nth month m) ^ " " ^ (string_of_int d) ^ ", " ^ (string_of_int y)
 ;;
 
 (** 
@@ -178,8 +197,12 @@ let date_to_string (_ : date) : string =
     
  *)
 
-let number_before_reaching_num (_ : int list) (_ : int) : int list =
-  todo "number_before_reaching_num"
+let number_before_reaching_num (ns : int list) (x : int) : int list =
+  let rec nbrn ns x (s : int) (rs : int list) : int list = 
+    match ns with
+      | [] -> rs
+      | n::ns -> if (s+n) < x then nbrn ns x (s+n) (rs @ [n]) else rs
+  in nbrn ns x 0 []
 ;;
 
 (** 
@@ -198,8 +221,9 @@ let number_before_reaching_num (_ : int list) (_ : int) : int list =
     
  *)
 
-let what_month (_ : int) : int =
-  todo "what_month"
+let what_month (x : int) : int =
+  let month = [31;28;31;30;31;30;31;31;30;31;30;31] in
+  List.length (number_before_reaching_num month x) +1
 ;;
 
 (** 
@@ -217,8 +241,13 @@ let what_month (_ : int) : int =
     
  *)
 
-let month_range (_ : int) (_ : int) : int list =
-  todo "month_range"
+let month_range (x : int) (y : int) : int list =
+  if x > y then [] else
+  let rec mr x y (rs : int list) =
+    match (y-x) with
+      | 0 -> rs
+      | _ -> mr x (y-1) ((what_month y)::rs)
+  in (what_month x)::(mr x y [])
 ;;
 
 (** 
@@ -235,8 +264,14 @@ let month_range (_ : int) (_ : int) : int list =
 
  *)
 
-let oldest (_ : date list) : date option =
-  todo "oldest"
+let oldest (ds : date list) : date option =
+  let rec aux (ds : date list) acc =
+    match ds,acc with
+      | [],None -> None
+      | x::xs,None -> aux xs (Some x)
+      | [],Some x -> Some x
+      | x::_,Some y -> if is_older x y then Some x else Some y
+  in aux ds None
 ;;
 
 (** 
@@ -247,12 +282,27 @@ let oldest (_ : date list) : date option =
     問題３と問題５の関数を、入力の月に重複があったとしても正しく動作するよう再実装せよ。
  *)
 
-let number_in_months' (_ : date list) (_ : int list) : int =
-  todo "number_in_months'"
+let rem_dup (ns : 'a list) : 'a list =
+  let rec is_in n acc = 
+    match acc with
+      | [] -> false
+      | x::xs -> if x = n then true else is_in n xs
+  in
+  let rec aux ns acc =
+    match ns with
+      | [] -> acc
+      | n::ns -> if is_in n acc then aux ns acc else aux ns (acc@[n])
+  in aux ns []
 ;;
 
-let dates_in_months' (_ : date list) (_ : int list) : date list =
-  todo "dates_in_months'"
+let number_in_months' (ds : date list) (ns : int list) : int =
+  let ns = rem_dup ns in
+  number_in_months ds ns
+;;
+
+let dates_in_months' (ds : date list) (ns : int list) : date list =
+  let ns = rem_dup ns in
+  dates_in_months ds ns
 ;;
 
 (** 
@@ -274,6 +324,23 @@ let dates_in_months' (_ : date list) (_ : int list) : date list =
 
  *)
 
-let reasonable_date (_ : date) : bool =
-  todo "reasonable_date"
+let is_leap_year (y : int) : bool =
+  if y mod 400 = 0 then true else
+  if y mod 100 = 0 then false else
+  if y mod 4 = 0 then true else false
+;;
+
+
+let reasonable_date ((y,m,d) : date) : bool =
+  if y < 1 then false else
+  if m < 1 || m > 12 then false else
+  let rec get_n xs n =
+    match xs with
+      | [] -> 0
+      | x::xs -> if n = 1 then x else get_n xs (n-1)
+  in
+  let months = if is_leap_year y 
+    then [31;29;31;30;31;30;31;31;30;31;30;31]
+    else [31;28;31;30;31;30;31;31;30;31;30;31] in
+  if d <= (get_n months m) && d > 0 then true else false
 ;;
