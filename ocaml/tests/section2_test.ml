@@ -77,11 +77,11 @@ let suite04 =
   "greeting"
   , [ quick_test "204A" (fun _ ->
           compare'
-            "Hello there, you"
+            "Hello there, you!"
             (greeting None))
     ; quick_test "204B" (fun _ ->
           compare'
-            "Hello there, jiyu"
+            "Hello there, jiyu!"
             (greeting (Some "jiyu")))
     ]
 ;;
