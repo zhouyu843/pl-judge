@@ -2,6 +2,9 @@ open Alcotest ;;
 open Types.Cardgame ;;
 open Types.Date ;;
 open Types.Fullname ;;
+open Types.Grade ;;
+open Types.Nat ;;
+open Types.Tree ;;
 
 let date_testable =
   let pp ppf ((y,m,d) : date) =
@@ -58,5 +61,36 @@ let move_testable =
     match move with
     | Draw -> Fmt.pf ppf "Draw"
     | Discard c -> Fmt.pf ppf "Discard %s" (pp_card c)
+  in testable pp (=)
+;;
+
+let mark_testable =
+  let pp ppf (mark : mark) =
+    match mark with
+    | Pass -> Fmt.pf ppf "Pass"
+    | Fail -> Fmt.pf ppf "Fail"
+  in testable pp (=)
+;;
+
+let flag_tree_testable =
+  let pp_flag = function
+    | Prune -> "Prune"
+    | Ignore -> "Ignore" in
+  let rec pp_flag_tree = function
+    | Leaf -> "Leaf"
+    | Node (f,t1,t2) -> "Node "
+                        ^ pp_flag f ^ " "
+                        ^ pp_flag_tree t1 ^ " "
+                        ^ pp_flag_tree t2 in
+  let pp ppf ft = Fmt.pf ppf "%s" (pp_flag_tree ft)
+  in testable pp (=)
+;;
+
+let nat_testable =
+  let rec pp_nat = function
+    | Zero -> "Zero"
+    | Succ n -> "Zero " ^ pp_nat n
+  in
+  let pp ppf n = Fmt.pf ppf "%s" (pp_nat n)
   in testable pp (=)
 ;;

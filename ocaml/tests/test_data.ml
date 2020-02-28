@@ -1,4 +1,5 @@
 open Types.Cardgame ;;
+open Types.Grade ;;
 
 (**
    Dates
@@ -111,3 +112,12 @@ let s_10 = (Spades, Num 10) ;;
 let s_J  = (Spades, Jack)   ;;
 let s_Q  = (Spades, Queen)  ;;
 let s_K  = (Spades, King)   ;;
+
+(**
+   Final Grades
+ *)
+
+let grade_A = { grade = None ; id = ID 0 } ;;
+let grade_B = { grade = Some (Grade 59) ; id = ID 1 } ;;
+let grade_C = { grade = Some (Grade 60) ; id = ID 2 } ;;
+let grade_D = { grade = Some (Grade 61) ; id = ID 3 } ;;  
