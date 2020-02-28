@@ -48,7 +48,7 @@ let card_testable =
 ;;
 
 let illegal_move_error_testable =
-  let pp ppf (e : illegal_move_error) =
+  let pp ppf (_ : illegal_move_error) =
     Fmt.pf ppf "IllegalMove"
   in testable pp (=)
 ;;

@@ -82,6 +82,7 @@ let similar_names (_ : string list list) (_ : fullname) : fullname list =
 (***
 
     問題４から問題１２は、ソリティア（一人で遊ぶ）カードゲームに関する練習問題である。
+    この中、最後の２問はチャレンジ問題とするため、自動テストは用意されていない。
 
     ゲームのルール：
 
@@ -103,8 +104,8 @@ let similar_names (_ : string list list) (_ : fullname) : fullname list =
     - 最終スコアが小さいほどよい（つまり0が最尤）
 
     ゲームの終了条件：
-    - プレーヤーが自ら停止
-    - sumがgoalを超えた
+    - プレーヤーが自ら停止した（プレーをやめた）時
+    - sumがgoalを超えた時（この場合超える直前のsumを点数計算に使う）
 
     この部分で使う型は exercises/types/cardgame.ml で定義されてある。
 
@@ -250,7 +251,7 @@ let officiate (_ : card list) (_ : int) (_ : move list) : (int, illegal_move_err
 
  *)
 
-let score_challenge (_ : card list) : int =
+let score_challenge (_ : card list) (_ : int) : int =
   todo "score_challenge"
 ;;
 

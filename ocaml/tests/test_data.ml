@@ -1,3 +1,5 @@
+open Types.Cardgame ;;
+
 (**
    Dates
  *)
@@ -49,3 +51,63 @@ let sep30_doy = aug31_doy + 30 ;;
 let oct31_doy = sep30_doy + 31 ;;
 let nov30_doy = oct31_doy + 30 ;;
 let dec31_doy = nov30_doy + 31 ;;
+
+(**
+   Cards
+ *)
+
+let c_A  = (Clubs, Ace)    ;;
+let c_2  = (Clubs, Num 2)  ;;
+let c_3  = (Clubs, Num 3)  ;;
+let c_4  = (Clubs, Num 4)  ;;
+let c_5  = (Clubs, Num 5)  ;;
+let c_6  = (Clubs, Num 6)  ;;
+let c_7  = (Clubs, Num 7)  ;;
+let c_8  = (Clubs, Num 8)  ;;
+let c_9  = (Clubs, Num 9)  ;;
+let c_10 = (Clubs, Num 10) ;;
+let c_J  = (Clubs, Jack)   ;;
+let c_Q  = (Clubs, Queen)  ;;
+let c_K  = (Clubs, King)   ;;
+
+let d_A  = (Diamonds, Ace)    ;;
+let d_2  = (Diamonds, Num 2)  ;;
+let d_3  = (Diamonds, Num 3)  ;;
+let d_4  = (Diamonds, Num 4)  ;;
+let d_5  = (Diamonds, Num 5)  ;;
+let d_6  = (Diamonds, Num 6)  ;;
+let d_7  = (Diamonds, Num 7)  ;;
+let d_8  = (Diamonds, Num 8)  ;;
+let d_9  = (Diamonds, Num 9)  ;;
+let d_10 = (Diamonds, Num 10) ;;
+let d_J  = (Diamonds, Jack)   ;;
+let d_Q  = (Diamonds, Queen)  ;;
+let d_K  = (Diamonds, King)   ;;
+
+let h_A  = (Hearts, Ace)    ;;
+let h_2  = (Hearts, Num 2)  ;;
+let h_3  = (Hearts, Num 3)  ;;
+let h_4  = (Hearts, Num 4)  ;;
+let h_5  = (Hearts, Num 5)  ;;
+let h_6  = (Hearts, Num 6)  ;;
+let h_7  = (Hearts, Num 7)  ;;
+let h_8  = (Hearts, Num 8)  ;;
+let h_9  = (Hearts, Num 9)  ;;
+let h_10 = (Hearts, Num 10) ;;
+let h_J  = (Hearts, Jack)   ;;
+let h_Q  = (Hearts, Queen)  ;;
+let h_K  = (Hearts, King)   ;;
+
+let s_A  = (Spades, Ace)    ;;
+let s_2  = (Spades, Num 2)  ;;
+let s_3  = (Spades, Num 3)  ;;
+let s_4  = (Spades, Num 4)  ;;
+let s_5  = (Spades, Num 5)  ;;
+let s_6  = (Spades, Num 6)  ;;
+let s_7  = (Spades, Num 7)  ;;
+let s_8  = (Spades, Num 8)  ;;
+let s_9  = (Spades, Num 9)  ;;
+let s_10 = (Spades, Num 10) ;;
+let s_J  = (Spades, Jack)   ;;
+let s_Q  = (Spades, Queen)  ;;
+let s_K  = (Spades, King)   ;;

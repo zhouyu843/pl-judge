@@ -1,7 +1,9 @@
 open Alcotest ;;
 open Exercises.Section3 ;;
+open Test_data ;;
 open Test_testable ;;
 open Test_util ;;
+open Types__Cardgame ;;
 open Types__Fullname ;;
 
 let suite01 =
@@ -111,70 +113,168 @@ let suite03 =
 let suite04 =
   let compare' = compare color_testable in
   "card_color"
-  , [
+  , [ quick_test "304A" (fun _ -> compare' Black (card_color c_A))
+    ; quick_test "304B" (fun _ -> compare' Black (card_color c_2))
+    ; quick_test "304C" (fun _ -> compare' Red (card_color d_A))
+    ; quick_test "304D" (fun _ -> compare' Red (card_color h_A))
+    ; quick_test "304E" (fun _ -> compare' Black (card_color s_A))
     ]
 ;;
 
 let suite05 =
   let compare' = compare int in
   "card_value"
-  , [
-    ] 
+  , [ quick_test "305A" (fun _ -> compare' 11 (card_value c_A))
+    ; quick_test "305B" (fun _ -> compare' 2 (card_value c_2))
+    ; quick_test "305C" (fun _ -> compare' 8 (card_value h_8))
+    ; quick_test "305D" (fun _ -> compare' 10 (card_value s_K))
+    ; quick_test "305E" (fun _ -> compare' 10 (card_value d_10))
+    ; quick_test "305F" (fun _ -> compare' 10 (card_value s_J))
+    ; quick_test "305G" (fun _ -> compare' 10 (card_value h_Q))
+    ]
 ;;
 
 let suite06 =
-  let compare' = compare (result card_testable illegal_move_error_testable) in
+  let
+    compare' = compare (result (list card_testable) illegal_move_error_testable)
+  in
   "remove_card"
-  , [
+  , [ quick_test "306A" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (remove_card [] c_A))
+    ; quick_test "306B" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (remove_card [] c_A))
+    ; quick_test "306C" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (remove_card [] c_A))
+    ; quick_test "306D" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (remove_card [] c_A))
+    ; quick_test "306E" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (remove_card [] c_A))
     ]
 ;;
 
 let suite07 =
   let compare' = compare bool in
   "all_same_color"
-  , [
+  , [ quick_test "307A" (fun _ ->
+          compare'
+            true
+            (all_same_color []))
+    ; quick_test "307B" (fun _ ->
+          compare'
+            true
+            (all_same_color [c_A]))
+    ; quick_test "307C" (fun _ ->
+          compare'
+            false
+            (all_same_color [c_A;h_2;]))
+    ; quick_test "307D" (fun _ ->
+          compare'
+            true
+            (all_same_color [c_A;s_8;c_J]))
+    ; quick_test "307E" (fun _ ->
+          compare'
+            false
+            (all_same_color [d_3;c_4;h_5;s_6]))
     ]
 ;;
 
 let suite08 =
   let compare' = compare int in
   "sum_card"
-  , [
+  , [ quick_test "308A" (fun _ ->
+          compare'
+            0
+            (sum_cards []))
+    ; quick_test "308B" (fun _ ->
+          compare'
+            11
+            (sum_cards [c_A]))
+    ; quick_test "308C" (fun _ ->
+          compare'
+            13
+            (sum_cards [c_A;d_2]))
+    ; quick_test "308D" (fun _ ->
+          compare'
+            23
+            (sum_cards [c_A;d_2;h_J]))
+    ; quick_test "308E" (fun _ ->
+          compare'
+            33
+            (sum_cards [c_A;d_2;h_J;s_K]))
     ]
 ;;
 
 let suite09 =
   let compare' = compare int in
   "score"
-  , [
+  , [ quick_test "309A" (fun _ ->
+          compare'
+            0
+            (score [] 0))
+    ; quick_test "309B" (fun _ ->
+          compare'
+            3
+            (score [] 7))
+    ; quick_test "309C" (fun _ ->
+          compare'
+            2
+            (score [c_A;d_2] 15))
+    ; quick_test "309D" (fun _ ->
+          compare'
+            77
+            (score [c_A;d_2;h_J] 100))
+    ; quick_test "309E" (fun _ ->
+          compare'
+            10
+            (score [c_A;c_7;s_2;s_K] 51))
     ]
 ;;
 
 let suite10 =
   let compare' = compare (result int illegal_move_error_testable) in
   "officiate"
-  , [
-    ]
-;;
-
-let suite11 =
-  let compare' = compare int in
-  "score_challenge"
-  , [
-    ]
-;;
-
-let suite12 =
-  let compare' = compare (result int illegal_move_error_testable) in
-  "officiate_challenge"
-  , [
-    ]
-;;
-
-let suite13 =
-  let compare' = compare (list (move_testable)) in
-  "careful_player"
-  , [
+  , [ quick_test "310A" (fun _ ->
+          compare'
+            (Ok 6)
+            (officiate [h_2;c_4] 15 [Draw]))
+    ; quick_test "310B" (fun _ ->
+          compare'
+            (Ok 3)
+            (officiate [c_A;s_A;c_A;s_A] 42 [Draw;Draw;Draw;Draw;Draw]))
+    ; quick_test "310C" (fun _ ->
+          compare'
+            (Error IllegalMove)
+            (officiate [c_J;s_8] 42 [Draw; Discard h_J]))
+    ; quick_test "310D" (fun _ ->
+          compare'
+            (Ok 15)
+            (officiate [c_A] 42 [Draw]))
+    ; quick_test "310E" (fun _ ->
+          compare'
+            (Ok 10)
+            (officiate [c_A;c_A] 42 [Draw;Draw]))
+    ; quick_test "310F" (fun _ ->
+          compare'
+            (Ok 4)
+            (officiate [c_A;c_A;c_A] 42 [Draw;Draw;Draw]))
+    ; quick_test "310G" (fun _ ->
+          compare'
+            (Ok 3)
+            (officiate [c_A;c_A;c_A;c_A] 42 [Draw;Draw;Draw;Draw]))
+    ; quick_test "310H" (fun _ ->
+          compare'
+            (Ok 3)
+            (officiate [c_A;c_A;c_A;c_A;c_A] 42 [Draw;Draw;Draw;Draw;Draw]))
     ]
 ;;
 
@@ -190,8 +290,5 @@ let () =
     ; suite08
     ; suite09
     ; suite10
-    ; suite11
-    ; suite12
-    ; suite13
     ]
 ;;
