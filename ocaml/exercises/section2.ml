@@ -84,7 +84,7 @@ let cumsum (xs : int list) : int list =
  *)
 
 let greeting (x : string option) : string =
-  let aux x = "Hello there, " ^ x in
+  let aux x = "Hello there, " ^ x ^ "!" in
   match x with
     | None -> aux "you"
     | Some x -> aux x
