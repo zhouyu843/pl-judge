@@ -45,7 +45,7 @@ let all_except_option (_ : string) (_ : string list) : string list option =
    ただし、結果はfirstname自身を含まない。
 
    例　　　：
-   # get_substitutions ["Fred";"Fredrick"];["Elizabeth";"Betty"];["Freddie";"Fred";"F"]] "Fred" ;;
+   # get_substitutions [["Fred";"Fredrick"];["Elizabeth";"Betty"];["Freddie";"Fred";"F"]] "Fred" ;;
    - : string list = ["Fredrick"; "Freddie"; "F"]
 
  *)
